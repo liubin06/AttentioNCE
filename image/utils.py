@@ -28,36 +28,6 @@ class CIFAR10Pair(CIFAR10):
         return pos_1, pos_2,pos_3,target
 
 
-class CIFAR100Pair_true_label(CIFAR100):
-    # dataloader where pairs of positive samples are randomly sampled from pairs
-    # of inputs with the same label.
-    def __init__(self, root='../data', train=True, transform=None):
-        super().__init__(root=root, train=train, transform=transform, download=True)
-
-        def get_labels(i):
-            return [index for index in range(len(self)) if self.targets[index] == i]
-
-        self.label_index = [get_labels(i) for i in range(100)]
-
-    def __getitem__(self, index):
-        img1, target = self.data[index], self.targets[index]
-
-        index_example_same_label = sample(self.label_index[self.targets[index]], 1)[0]
-        img2 = self.data[index_example_same_label]
-
-        img1 = Image.fromarray(img1)
-        img2 = Image.fromarray(img2)
-
-        if self.transform is not None:
-            pos_1 = self.transform(img1)
-            pos_2 = self.transform(img2)
-
-        if self.target_transform is not None:
-            target = self.target_transform(target)
-
-        return pos_1, pos_2, target
-
-
 class CIFAR100Pair(CIFAR100):
     def __getitem__(self, index):
         img, target = self.data[index], self.targets[index]
@@ -141,10 +111,6 @@ def get_dataset(dataset_name, root='../data', pair=True):
             train_data = STL10Pair(root=root, split='train+unlabeled', transform=train_transform)
             memory_data = STL10Pair(root=root, split='train', transform=test_transform)
             test_data = STL10Pair(root=root, split='test', transform=test_transform)
-        elif dataset_name == 'cifar100_true_label':
-            train_data = CIFAR100Pair_true_label(root=root, train=True, transform=train_transform)
-            memory_data = CIFAR100Pair_true_label(root=root, train=True, transform=test_transform)
-            test_data = CIFAR100Pair_true_label(root=root, train=False, transform=test_transform)
         else:
             raise Exception('Invalid dataset name')
         return train_data
