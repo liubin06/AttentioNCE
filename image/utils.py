@@ -25,7 +25,7 @@ class CIFAR10Pair(CIFAR10):
 
         if self.target_transform is not None:
             target = self.target_transform(target)
-        return pos_1, pos_2, pos_3,pos_4, pos_5, pos_6,,target
+        return pos_1, pos_2, pos_3,pos_4, pos_5, pos_6,target
 
 
 class CIFAR100Pair(CIFAR100):
