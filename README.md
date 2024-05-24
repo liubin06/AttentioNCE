@@ -34,7 +34,7 @@ The model is evaluated by training a linear classifier after fixing the learned 
 path flags:
 `--model_path`: choose the model for evaluation.
 ```
-python linear.py --dataset_name stl10 --model_path '../results/stl10/stl10_SimCLR_4model_256_400_2.0_0.5.pth'
+python linear.py --dataset_name 'stl10' --model_path '../results/stl10/stl10_SimCLR_4model_256_400_2.0_0.5.pth'
 ```
 
 ## Pretrained Models on STL10 Dataset
