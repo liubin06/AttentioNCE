@@ -67,7 +67,7 @@ def train_val(net, data_loader, train_optimizer):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Linear Evaluation')
     parser.add_argument('--root', type=str, default='../data', help='Path to data directory')
-    parser.add_argument('--model_path', type=str, default='../results/cifar10/cifar10_SimCLR_model_128_54.pth',
+    parser.add_argument('--model_path', type=str, default='../results/cifar10/stl10_SimCLR_4model_256_400_2.0_0.5.pth',
                         help='The pretrained model path')
     parser.add_argument('--batch_size', type=int, default=512, help='Number of images in each mini-batch')
     parser.add_argument('--epochs', type=int, default=100, help='Number of sweeps over the dataset to train')
@@ -79,7 +79,6 @@ if __name__ == '__main__':
     print(model_path)
     
     train_data, _, test_data = utils.get_dataset(dataset_name, root=args.root, pair=False)
-
     train_loader = DataLoader(train_data, batch_size=batch_size, shuffle=True, num_workers=4, pin_memory=True)
     test_loader = DataLoader(test_data, batch_size=batch_size, shuffle=False, num_workers=4, pin_memory=True)
 
