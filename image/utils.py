@@ -25,7 +25,8 @@ class CIFAR10Pair(CIFAR10):
 
         if self.target_transform is not None:
             target = self.target_transform(target)
-        return pos_1, pos_2, pos_3,pos_4, pos_5, pos_6,target
+        return pos_1, pos_2, pos_3, pos_4, pos_5, pos_6, target
+
 
 
 class CIFAR100Pair(CIFAR100):
@@ -60,7 +61,7 @@ class STL10Pair(STL10):
             pos_5 = self.transform(img)
             pos_6 = self.transform(img)
 
-        return pos_1, pos_2,pos_3,pos_4, pos_5, pos_6, target
+        return pos_1, pos_2,pos_3,pos_4,pos_5,pos_6, target
 
 
 class GaussianBlur(object):
@@ -101,16 +102,13 @@ def get_dataset(dataset_name, root='../data', pair=True):
     if pair:
         if dataset_name == 'cifar10':
             train_data = CIFAR10Pair(root=root, train=True, transform=train_transform)
-            memory_data = CIFAR10Pair(root=root, train=True, transform=test_transform)
-            test_data = CIFAR10Pair(root=root, train=False, transform=test_transform)
+
         elif dataset_name == 'cifar100':
             train_data = CIFAR100Pair(root=root, train=True, transform=train_transform)
-            memory_data = CIFAR100Pair(root=root, train=True, transform=test_transform)
-            test_data = CIFAR100Pair(root=root, train=False, transform=test_transform)
+
         elif dataset_name == 'stl10':
             train_data = STL10Pair(root=root, split='train+unlabeled', transform=train_transform)
-            memory_data = STL10Pair(root=root, split='train', transform=test_transform)
-            test_data = STL10Pair(root=root, split='test', transform=test_transform)
+
         else:
             raise Exception('Invalid dataset name')
         return train_data
@@ -130,5 +128,5 @@ def get_dataset(dataset_name, root='../data', pair=True):
         else:
             raise Exception('Invalid dataset name')
 
-    return train_data, memory_data, test_data
+        return train_data, memory_data, test_data
 
