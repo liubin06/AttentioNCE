@@ -25,25 +25,45 @@ def get_negative_mask(batch_size):
 
 
 def AttentioNCE(out_1, out_2, out_3, out_4, out_5, out_6, batch_size, temperature, d_pos, d_neg):
+    '''
+    Parameters
+    ----------
+    # anchor points
+    out_1 : anchor feature [bs,dim]
+    out_2 : anchor feature [bs,dim]
+
+    # positive samples
+    out_3 : positive view1 features [bs,dim]
+    out_4 : positive view2 features [bs,dim]
+    out_5 : positive view3 features [bs,dim]
+    out_6 : positive view4 features [bs,dim]
+
+    batch_size : Under SimCLR framework, negative sample size N = 2 x (batch size - 1)
+    temperature: temperature scaling
+    d_pos : positive scaling factor
+    d_neg : negative scaling factor
+    Returns: AttentioNCE loss values [2bs,]
+    -------
+
+    '''
     anchor = torch.cat([out_1, out_2], dim=0)  # [2bs*dim]
 
     # pos score
-    pos_views = torch.cat([out_3, out_4, out_5, out_6],dim=1).view(-1, 4, feature_dim) # [bs,3,dim]
+    pos_views = torch.cat([out_3, out_4, out_5, out_6],dim=1).view(-1, 4, feature_dim) # [bs,4,dim]
     pos_sim = torch.sum(anchor.view(2, batch_size, 1, feature_dim) * pos_views, dim=-1).view(-1, 4)
-    # [2,bs,1,dim] x [bs,3,dim]  -> [2,bs,3]-> [2bs,3]
-    pos_attention_score = torch.nn.functional.softmax(pos_sim.detach()/ d_pos, dim=-1) # [2bs,3]
-    pos_score = torch.exp(torch.sum(pos_sim * pos_attention_score, dim=-1) / temperature)  # [2bs]
+    # [2,bs,1,dim] x [bs,4,dim]  -> [2,bs,4,dim] ->  [2,bs,4]-> [2bs,3]
+    alpha = torch.nn.functional.softmax(pos_sim.detach()/ d_pos, dim=-1) # [2bs,4]
+    pos_score = torch.exp(torch.sum(pos_sim * alpha, dim=-1) / temperature)  # [2bs,] This step based on the additivity property of inner product operations.
 
     # neg score
     sim = torch.mm(anchor, anchor.t().contiguous())  # [2bs,2bs]
     mask = get_negative_mask(batch_size).to(device)
     neg_sim = sim.masked_select(mask).view(2 * batch_size, -1)  # [2bs, 2N-2]
-    neg_attention_score = (torch.nn.functional.softmax(neg_sim.detach() / d_neg, dim=-1) + 1e-6) * (2 * batch_size - 2)
-
-    neg_score = torch.exp(neg_sim * neg_attention_score / temperature)  # [2bs, 2N-2]
+    beta = (torch.nn.functional.softmax(neg_sim.detach() / d_neg, dim=-1) + 1e-6) * (2 * batch_size - 2)
+    neg_score = torch.exp(neg_sim * beta / temperature)  # [2bs, 2N-2] This step based on the additivity property of inner product operations.
 
     # contrastive loss
-    loss = - torch.log(pos_score / (pos_score + neg_score.sum(dim=-1))).mean()
+    loss = - torch.log(pos_score / (pos_score + neg_score.sum(dim=-1))).mean() # [2bs,]
     return loss
 
 
