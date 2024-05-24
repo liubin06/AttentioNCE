@@ -105,7 +105,7 @@ if __name__ == '__main__':
     parser.add_argument('--k', default=200, type=int, help='Top k most similar images used to predict the label')
     parser.add_argument('--batch_size', default=256, type=int, help='Number of images in each mini-batch')
     parser.add_argument('--epochs', default=400, type=int, help='Number of sweeps over the dataset to train')
-    parser.add_argument('--estimator', default='SimCLR', type=str, help='Choose loss function: SimCLR')
+    parser.add_argument('--estimator', default='SimCLR', type=str, help='SimCLR Framework')
     parser.add_argument('--dataset_name', default='tinyImageNet', type=str, help='Choose dataset')
     parser.add_argument('--d_pos', default=1, type=float, help='Scale factor for positive examples')
     parser.add_argument('--d_neg', default=1, type=float, help='Scale factor for negative examples')
