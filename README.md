@@ -41,7 +41,7 @@ python linear.py --dataset_name stl10 --model_path '../results/stl10/stl10_SimCL
 | Method  | $d_\text{pos}$ | $d_\text{neg}$ | Arch | Epoch | Batch Size  | Accuracy(%) | Download | 
 |---------|:--------------:|:--------------:|:----:|:-----:|:---:|:-----------:|:---:|
 | SimCLR  |     -        |       -        | ResNet50 |  400  | 256  |    80.15    |  [model](https://drive.google.com/file/d/1qQE03ztnQCK4dtG-GPwCvF66nq_Mk_mo/view?usp=sharing)|
-| AttentioNCE |       2        |      0.5       | ResNet50 |  200  | 256  |    81.12    |  [model](https://drive.google.com/file/d/1f3d8LYeX_8VLtqK1oai6SywmHAV0TwK9/view?usp=sharing)| 
+| AttentioNCE |       2        |      0.5       | ResNet50 |  200  | 256  |    87.12    |  [model](https://drive.google.com/file/d/1f3d8LYeX_8VLtqK1oai6SywmHAV0TwK9/view?usp=sharing)| 
 | AttentioNCE        |       2        |      0.5       | ResNet50 |  400  | 256  |    89.45    |  [model](https://drive.google.com/file/d/1cQquMQA74GlQD6MQeP1l2zEhkJfdrKCA/view?usp=sharing)| 
 
 
