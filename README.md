@@ -66,4 +66,4 @@ python linear.py --dataset_name stl10 --model_path '../results/stl10/stl10_SimCL
 | BCL |       4        |       1        | ResNet50 |    200     | 256  |    56.58    |  [model](https://drive.google.com/file/d/1oQaHY5fW2_3trpBe4xMP4K_x3cRW8UjL/view?usp=sharing)| 
 | BCL |       4        |       1        | ResNet50 |    400     | 256  |    58.61    |  [model](https://drive.google.com/file/d/1lVRxeZBRP18uQsw4FVOtaoBQnK7hU0yG/view?usp=sharing)| 
 ## Acknowledgements
-Part of this code is credited to [SimCLR](https://github.com/leftthomas/SimCLR), [DCL](https://github.com/chingyaoc/DCL) and [HCL](https://github.com/joshr17/HCL).
+Part of this code is credited to [SimCLR(ICML 2020)](https://github.com/leftthomas/SimCLR), [DCL(NeurIPS 2020)](https://github.com/chingyaoc/DCL) and [HCL(ICLR 2021)](https://github.com/joshr17/HCL).
