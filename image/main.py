@@ -58,7 +58,7 @@ def AttentioNCE(out_1, out_2, out_3, out_4, out_5, out_6, batch_size, temperatur
     # neg score
     sim = torch.mm(anchor, anchor.t().contiguous())  # [2bs,2bs]
     mask = get_negative_mask(batch_size).to(device)
-    neg_sim = sim.masked_select(mask).view(2 * batch_size, -1)  # [2bs, 2N-2]
+    neg_sim = sim.masked_select(mask).view(2 * batch_size, -1)  # [2bs, 2bs-2]
     beta = (torch.nn.functional.softmax(neg_sim.detach() / d_neg, dim=-1) + 1e-6) * (2 * batch_size - 2)
     neg_score = torch.exp(neg_sim * beta / temperature)  # [2bs, 2N-2] This step is obtained based on the additivity property of inner product operations.
 
