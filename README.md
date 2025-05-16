@@ -1,4 +1,4 @@
-# AttentioNCE: Contrastive Learning with Instance Attention
+# AttentionNCE: Contrastive Learning with Instance Attention
 AttentioNCE integrates the attention mechanism into contrastive learning to guide the model's attention towards high-quality samples while disregarding noisy ones. Consequently, AttentioNCE constructs a variational lower bound for an ideal contrastive loss, offering a worst-case guarantee for maximum likelihood estimation under noisy conditions. 
 
 
